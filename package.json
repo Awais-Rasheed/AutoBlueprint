@@ -1,0 +1,31 @@
+{
+  "name": "autoblueprint",
+  "version": "1.0.0",
+  "description": "Automatically generate detailed 2D and 3D building blueprints from basic user inputs",
+  "scripts": {
+    "start": "./start.sh",
+    "install-all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "build": "cd frontend && npm run build",
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && npm run dev"
+  },
+  "keywords": [
+    "blueprint",
+    "architecture",
+    "3d",
+    "2d",
+    "building",
+    "design",
+    "react",
+    "nodejs"
+  ],
+  "author": "AutoBlueprint Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "axios": "^1.12.2"
+  }
+}

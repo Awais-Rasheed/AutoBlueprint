@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TailwindCSS Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">TailwindCSS Test</h1>
+        <p class="text-gray-600 mb-6">This page tests if TailwindCSS is working properly.</p>
+        
+        <div class="space-y-4">
+            <div class="bg-blue-100 border border-blue-300 rounded-lg p-4">
+                <h2 class="text-lg font-semibold text-blue-800">Success!</h2>
+                <p class="text-blue-600">TailwindCSS is working correctly.</p>
+            </div>
+            
+            <div class="flex space-x-2">
+                <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition-colors">
+                    Green Button
+                </button>
+                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors">
+                    Red Button
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-purple-100 p-4 rounded-lg">
+                    <h3 class="font-semibold text-purple-800">Card 1</h3>
+                    <p class="text-purple-600 text-sm">Grid item</p>
+                </div>
+                <div class="bg-orange-100 p-4 rounded-lg">
+                    <h3 class="font-semibold text-orange-800">Card 2</h3>
+                    <p class="text-orange-600 text-sm">Grid item</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
