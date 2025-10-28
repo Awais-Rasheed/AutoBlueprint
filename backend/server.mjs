@@ -1,8 +1,14 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { GoogleGenAI } from "@google/genai";
+
+dotenv.config();
+
+const genAI = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -267,19 +273,30 @@ class BlueprintGenerator {
 }
 
 async function getAIDimensions(area, buildingType) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
   const prompt = `
     You are an architectural planner. 
     Given a total plot area of ${area} sq ft for a ${buildingType}, 
-    return an optimized JSON layout with each room name, width, height, and relative coordinates. 
+    return an optimized JSON layout with each room name, width, height, and relative coordinates.
     Example JSON:
     [{"name":"Lounge","x":0,"y":0,"width":400,"height":300},{"name":"Bedroom","x":400,"y":0,"width":200,"height":200}]
   `;
 
-  const result = await model.generateContent(prompt);
-  const text = result.response.text();
-  return JSON.parse(text);
+  const result = await genAI.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: [{ role: "user", parts: [{ text: prompt }] }],
+  });
+
+  // ✅ This is the correct way to get text output
+  const text = result.text();
+
+  // ✅ (Optional) Sanitize in case Gemini returns extra text around JSON
+  const jsonMatch = text.match(/\[.*\]/s);
+  const cleanJSON = jsonMatch ? jsonMatch[0] : text;
+
+  return JSON.parse(cleanJSON);
 }
+
+
 
 // API Routes
 app.post('/api/generate-blueprint', async (req, res) => {
@@ -291,7 +308,7 @@ app.post('/api/generate-blueprint', async (req, res) => {
     }
 
     const generator = new BlueprintGenerator();
-    const blueprint = generator.generateLayout(area, shape || 'rectangle', buildingType);
+    const blueprint = await generator.generateLayout(area, shape || 'rectangle', buildingType);
 
     res.json({
       success: true,
